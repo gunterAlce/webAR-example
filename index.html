@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAR Example</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+    <a-scene embedded arjs>
+        <!-- Camera -->
+        <a-marker-camera preset="hiro"></a-marker-camera>
+
+        <!-- 3D Model -->
+        <a-entity gltf-model="https://cdn.glitch.com/example-model.glb"
+                  scale="0.5 0.5 0.5" 
+                  position="0 0 0">
+        </a-entity>
+    </a-scene>
+</body>
+</html>
