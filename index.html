@@ -6,17 +6,53 @@
     <title>WebAR Example</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body style="margin: 0; overflow: hidden;">
+<body>
+
+    <!-- Loading Message -->
+    <div id="loadingMessage">Loading AR experience, please wait...</div>
+
+    <!-- AR Scene -->
     <a-scene embedded arjs>
-        <!-- Camera -->
+        <!-- Marker and 3D Model -->
         <a-marker-camera preset="hiro"></a-marker-camera>
 
-        <!-- 3D Model -->
-        <a-entity gltf-model="https://raw.githubusercontent.com/gunterAlce/webAR-example/main/microFos3.glb"
-                  scale="0.5 0.5 0.5" 
-                  position="0 0 0">
+        <!-- 3D model (replace URL with your model) -->
+        <a-entity 
+            gltf-model="https://raw.githubusercontent.com/gunterAlce/webAR-example/main/microFos3.glb" 
+            scale="0.5 0.5 0.5" 
+            position="0 0 0">
         </a-entity>
+
+        <!-- AR scene ends -->
     </a-scene>
+
+    <!-- Overlay with Instructions -->
+    <div id="overlay">Point your camera at the marker to see the 3D model!</div>
+
+    <!-- Optional AR Interaction Button -->
+    <button id="ar-button" onclick="startAR()">Start AR</button>
+
+    <!-- Message for devices with no AR support -->
+    <div id="no-ar-message">Your device doesn't support WebAR.</div>
+
+    <script>
+        // Function to hide loading message when AR scene is ready
+        window.onload = function() {
+            document.getElementById('loadingMessage').style.display = 'none';
+        };
+
+        // AR button function (you can use this for additional interaction)
+        function startAR() {
+            alert('AR started! Interact with the marker.');
+        }
+
+        // Check for AR support
+        if (!AFRAME.utils.device.isMobile()) {
+            document.getElementById('no-ar-message').style.display = 'block';
+        }
+    </script>
+
 </body>
 </html>
