@@ -3,27 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebAR Example with model-viewer</title>
+    <title>WebAR Modelväljare</title>
     <link rel="stylesheet" href="style.css">
     <!-- Include the model-viewer library -->
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            padding: 1rem;
+            background-color: #f0f0f0;
+        }
+        model-viewer {
+            width: 100%;
+            height: 500px;
+            background-color: #fff;
+        }
+        select, button {
+            font-size: 1rem;
+            padding: 0.5rem;
+            margin: 0.5rem;
+        }
+    </style>
 </head>
 <body>
 
     <!-- Loading message -->
     <div id="loadingMessage">Loading AR experience, please wait...</div>
 
+    <!-- Dropdown for selecting volume -->
+    <label for="modelSelector">Välj model:</label>
+    <select id="modelSelector">
+        <option value="1">Protein</option>
+        <option value="2">MicroFossil</option>
+        <option value="3">Box</option>
+    </select>
+    <button onclick="loadModel()">Show</button>
+
     <!-- 3D Model Viewer -->
     <model-viewer id="arViewer"
-        src="https://lu.box.com/shared/static/or1szglmwti6dpe0zukllcc5vqm1ifdi.glb"
-        ios-src="https://lu.box.com/shared/static/97xdjmu1yiupeudjdq97az2eendwccac.usdz"
+        src=""
+        ios-src=""
         alt="A 3D model in AR"
         ar
         ar-modes="scene-viewer quick-look"
         camera-controls
-        auto-rotate
-        style="width: 100%; height: 500px;">
+        auto-rotate>
     </model-viewer>
+
+    <script>
+        // Lista med Box-länkar till modeller
+        const modelMap = {
+            1: {
+                glb: "https://lu.box.com/shared/static/or1szglmwti6dpe0zukllcc5vqm1ifdi.glb",
+                usdz: "https://lu.box.com/shared/static/1y2yq5wjbnn62ol02led46cc81m5cg3c.usdz"
+            },
+            2: {
+                glb: "https://lu.box.com/shared/static/zoj4codrntg1kdu8leshjq4gg9h9umpq.glb",
+                usdz: "https://lu.box.com/shared/static/97xdjmu1yiupeudjdq97az2eendwccac.usdz"
+            },
+            3: {
+                glb: "https://lu.box.com/shared/static/liqojjjjpe49agtf29kkbhswspd9if92.glb",
+                usdz: "https://lu.box.com/shared/static/9c05y2md2pkx6nxyfps5a2354yind45u.usdz"
+            }
+        };
+
+        function loadModel() {
+            const selected = document.getElementById("modelSelector").value;
+            const viewer = document.getElementById("arViewer");
+            const model = modelMap[selected];
+
+            viewer.setAttribute("src", model.glb);
+            viewer.setAttribute("ios-src", model.usdz);
+        }
+
+        // Ladda första modellen automatiskt vid start
+        window.onload = () => {
+            document.getElementById("modelSelector").value = "1";
+            loadModel();
+            document.getElementById("loadingMessage").style.display = "none";
+        };
+    </script>
 
 </body>
 </html>
